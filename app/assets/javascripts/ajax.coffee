@@ -3,6 +3,10 @@ angular.module('myapp', [
 ])
 
 @fibCtrl = ($scope, $http) ->
+  $scope.nomlFlg=true
+  $scope.numlFlg=false
+  $scope.tablFlg=false
+  $scope.fibSize=0
   $scope.size = ->
     url = "/fibSize=" + $scope.fibSize
     $http.get(url).success((data, status, headers, config) ->
@@ -18,10 +22,8 @@ angular.module('myapp', [
   $scope.dispFlg = (flg) ->
     url = "/dispFlg=" + flg
     $http.get(url).success((data, status, headers, config) ->
-      console.log(data)
       $scope.nomlFlg=data[0]
       $scope.numlFlg=data[1]
       $scope.tablFlg=data[2]
     ).error (data, status, headers, config) ->
-      $scope.nomlFlg=true
       
