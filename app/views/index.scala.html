@@ -1,0 +1,51 @@
+
+<html ng-app="myapp">
+	<head>
+	<title>fibArray</title>
+		<script src="http://code.angularjs.org/1.2.9/angular.min.js"></script>
+		<script src="@routes.Assets.at("javascripts/ajax.js")" type="text/javascript"></script>
+		<script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.js"></script>
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div ng-controller="fibCtrl">
+			<input type="radio" ng-model="nomlFlg" name ="flg" ng-click="noml()">normalList</input>
+			<input type="radio" ng-model="numlFlg" name ="flg" ng-click="numl()">numberList</input>
+			<input type="radio" ng-model="tablFlg" name ="flg" ng-click="tabl()">colorList</input>
+			<br>
+			size : 
+			<input type="number" ng-model="fibSize" ng-change="size()" id="size" min="0" max="100" value="0" ></input>
+			<div ng-show="nomlFlg">
+				<ul>
+					<li ng-repeat="fib in fibs track by $index">
+						{{fib}}
+					</li>
+				</ul>
+			</div>
+			<div ng-show="numlFlg">
+				<ol>
+					<li ng-repeat="fib in fibs track by $index">
+						{{fib}}
+					</li>
+				</ol>
+			</div>
+			<div ng-show="tablFlg">
+				<table class="table">
+					<tbody>
+						<tr class="success" ng-repeat="fib in fibs track by $index">
+							<th>
+								{{fib}}
+							</th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>
+
+
+
