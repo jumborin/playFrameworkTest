@@ -24,12 +24,14 @@ object Application extends Controller {
   def getDispFlgAction(dispFlg:String) = Action {
     if(flgList.contains(dispFlg)){
       val dispFlgList:Seq[JsBoolean] = Dao.selectDispFlg(dispFlg)
-      Ok(Json.toJson(Dao.selectDispFlg(dispFlg)))
+      val result:Seq[JsBoolean] = Dao.selectDispFlg(dispFlg)
+      Ok(Json.toJson(result))
     }else{
       BadRequest("An incorrect value")
     }
   }
 }
+case class DispFlg(normalFlg:JsBoolean,numberFlg:JsBoolean,colorFlg:JsBoolean)
 
 import anorm._
 import play.api.db.DB

@@ -12,27 +12,27 @@
 	</head>
 	<body>
 		<div ng-controller="fibCtrl">
-			<input type="radio" ng-model="normalFlg" name ="flg" ng-click="getNormalFlg()">normalList</input>
-			<input type="radio" ng-model="numberFlg" name ="flg" ng-click="getNumberFlg()">numberList</input>
-			<input type="radio" ng-model="colorFlg" name ="flg" ng-click="getColorFlg()">colorList</input>
+			<input type="radio" name ="flg" ng-click="getNormalFlg()" checked>normalList</input>
+			<input type="radio" name ="flg" ng-click="getNumberFlg()">numberList</input>
+			<input type="radio" name ="flg" ng-click="getColorFlg()">colorList</input>
 			<br>
 			size : 
 			<input type="number" ng-model="fibSize" ng-change="size()" id="size" min="0" max="100"></input>
-			<div ng-show="normalFlg">
+			<div ng-show="dispFlg.normalFlg">
 				<ul>
 					<li ng-repeat="fib in fibs track by $index">
 						{{fib}}
 					</li>
 				</ul>
 			</div>
-			<div ng-show="numberFlg">
+			<div ng-show="dispFlg.numberFlg">
 				<ol>
 					<li ng-repeat="fib in fibs track by $index">
 						{{fib}}
 					</li>
 				</ol>
 			</div>
-			<div ng-show="colorFlg">
+			<div ng-show="dispFlg.colorFlg">
 				<table class="table">
 					<tbody>
 						<tr class="success" ng-repeat="fib in fibs track by $index">
