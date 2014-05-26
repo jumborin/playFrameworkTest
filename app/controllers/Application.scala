@@ -9,10 +9,9 @@ object Application extends Controller {
     Ok(views.html.index())
   }
   
-  def fibAction(fibSize:String) = Action {
-    val arraySize = fibSize.toInt
-    if(0 <= arraySize && arraySize <= 100){
-      Ok(Json.toJson(fib.take(arraySize)))
+  def fibAction(fibSize:Int) = Action {
+    if(0 <= fibSize && fibSize <= 100){
+      Ok(Json.toJson(fib.take(fibSize)))
     }else{
       BadRequest("Input value is at 0-100")
     }
@@ -22,8 +21,9 @@ object Application extends Controller {
   
   val flgList:List[String] = List("normalFlg","numberFlg","colorFlg")
   
-  def getDispFlg(dispFlg:String) = Action {
+  def getDispFlgAction(dispFlg:String) = Action {
     if(flgList.contains(dispFlg)){
+      val dispFlgList:Seq[JsBoolean] = Dao.selectDispFlg(dispFlg)
       Ok(Json.toJson(Dao.selectDispFlg(dispFlg)))
     }else{
       BadRequest("An incorrect value")
@@ -36,9 +36,9 @@ import play.api.db.DB
 import play.api.Play.current
 
 object Dao{
-  def selectDispFlg(dispFlg:String):Seq[Boolean] = DB.withConnection{ implicit conn =>
-    val resultSqlRowMap = SQL("Select * From disppatern Where name = '" + dispFlg + "' ").apply.apply(0).asMap
-    val resultList = Seq(resultSqlRowMap.get("DISPPATERN.NORMALFLG").get ,resultSqlRowMap.get("DISPPATERN.NUMBERFLG").get ,resultSqlRowMap.get("DISPPATERN.COLORFLG").get).map(f=>f.asInstanceOf[Some[Boolean]]).map(g=>g.get)
+  def selectDispFlg(dispFlg:String):Seq[JsBoolean] = DB.withConnection{ implicit conn =>
+    val resultSqlRowMap = SQL("Select normalflg,numberflg,colorflg From disppatern Where name = '" + dispFlg + "' ").apply.apply(0).asMap
+    val resultList = Seq(resultSqlRowMap.get("DISPPATERN.NORMALFLG").get ,resultSqlRowMap.get("DISPPATERN.NUMBERFLG").get ,resultSqlRowMap.get("DISPPATERN.COLORFLG").get).map(f=>JsBoolean(f.asInstanceOf[Some[Boolean]].get))
     return resultList
   }
 }

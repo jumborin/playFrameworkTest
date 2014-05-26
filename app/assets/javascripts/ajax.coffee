@@ -13,17 +13,17 @@ angular.module('myapp', [
       $scope.fibs = data
     ).error (data, status, headers, config) ->
       $scope.fibs = ""
-  $scope.noml = ->
-    $scope.dispFlg("normalFlg")
-  $scope.numl = ->
-    $scope.dispFlg("numberFlg")
-  $scope.tabl = ->
-    $scope.dispFlg("colorFlg")
-  $scope.dispFlg = (flg) ->
+  $scope.getNormalFlg = ->
+    $scope.getDispFlg("normalFlg")
+  $scope.getNumberFlg = ->
+    $scope.getDispFlg("numberFlg")
+  $scope.getColorFlg = ->
+    $scope.getDispFlg("colorFlg")
+  $scope.getDispFlg = (flg) ->
     url = "/dispFlg=" + flg
     $http.get(url).success((data, status, headers, config) ->
       $scope.normalFlg=data[0]
       $scope.numberFlg=data[1]
       $scope.colorFlg=data[2]
-    ).error (data, status, headers, config) ->
-      
+    )
+

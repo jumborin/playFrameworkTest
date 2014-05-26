@@ -4,8 +4,8 @@
 
 # Home page
 GET     /                           controllers.Application.index
-GET     /fibSize=:fibSize           controllers.Application.fibAction(fibSize)
-GET     /dispFlg=:dispFlg           controllers.Application.getDispFlg(dispFlg)
+GET     /fibSize=:fibSize           controllers.Application.fibAction(fibSize:Int)
+GET     /dispFlg=:dispFlg           controllers.Application.getDispFlgAction(dispFlg)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
