@@ -3,9 +3,9 @@ angular.module('myapp', [
 ])
 
 @fibCtrl = ($scope, $http) ->
-  $scope.nomlFlg=true
-  $scope.numlFlg=false
-  $scope.tablFlg=false
+  $scope.normalFlg=true
+  $scope.numberFlg=false
+  $scope.colorFlg=false
   $scope.fibSize=0
   $scope.size = ->
     url = "/fibSize=" + $scope.fibSize
@@ -14,16 +14,16 @@ angular.module('myapp', [
     ).error (data, status, headers, config) ->
       $scope.fibs = ""
   $scope.noml = ->
-    $scope.dispFlg("nomlFlg")
+    $scope.dispFlg("normalFlg")
   $scope.numl = ->
-    $scope.dispFlg("numlFlg")
+    $scope.dispFlg("numberFlg")
   $scope.tabl = ->
-    $scope.dispFlg("tablFlg")
+    $scope.dispFlg("colorFlg")
   $scope.dispFlg = (flg) ->
     url = "/dispFlg=" + flg
     $http.get(url).success((data, status, headers, config) ->
-      $scope.nomlFlg=data[0]
-      $scope.numlFlg=data[1]
-      $scope.tablFlg=data[2]
+      $scope.normalFlg=data[0]
+      $scope.numberFlg=data[1]
+      $scope.colorFlg=data[2]
     ).error (data, status, headers, config) ->
       
