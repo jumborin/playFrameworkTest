@@ -23,9 +23,7 @@ object Application extends Controller {
   
   def getDispFlgAction(dispFlg:String) = Action {
     if(flgList.contains(dispFlg)){
-      val dispFlgList:Seq[JsBoolean] = Dao.selectDispFlg(dispFlg)
-      val result:Seq[JsBoolean] = Dao.selectDispFlg(dispFlg)
-      Ok(Json.toJson(result))
+      Ok(Dao.selectDispFlg(dispFlg))
     }else{
       BadRequest("An incorrect value")
     }
@@ -38,10 +36,12 @@ import play.api.db.DB
 import play.api.Play.current
 
 object Dao{
-  def selectDispFlg(dispFlg:String):Seq[JsBoolean] = DB.withConnection{ implicit conn =>
-    val resultSqlRowMap = SQL("Select normalflg,numberflg,colorflg From disppatern Where name = '" + dispFlg + "' ").apply.apply(0).asMap
-    val resultList = Seq(resultSqlRowMap.get("DISPPATERN.NORMALFLG").get ,resultSqlRowMap.get("DISPPATERN.NUMBERFLG").get ,resultSqlRowMap.get("DISPPATERN.COLORFLG").get).map(f=>JsBoolean(f.asInstanceOf[Some[Boolean]].get))
-    return resultList
+  def selectDispFlg(dispFlg:String):JsValue = DB.withConnection{ implicit conn =>
+    return Json.toJson(
+        SQL("Select normalflg,numberflg,colorflg From disppatern Where name = '" + dispFlg + "' ")().map(
+            row => Map("normalFlg" ->JsBoolean(row[Boolean]("DISPPATERN.NORMALFLG")) ,
+                "numberFlg" -> JsBoolean(row[Boolean]("DISPPATERN.NUMBERFLG")) ,
+                "colorFlg" ->JsBoolean(row[Boolean]("DISPPATERN.COLORFLG")))).toList.apply(0))
   }
 }
 
