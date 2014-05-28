@@ -32,12 +32,12 @@ object Dao{
   def selectDispFlg:JsValue = DB.withConnection{ implicit conn =>
     val resultJsValueList:List[JsValue] =
         (SQL("Select id,normalflg,numberflg,colorflg From disppatern ORDER BY id ASC")().map(
-            row => Json.toJson(Map("normalFlg" -> JsBoolean(row[Boolean]("DISPPATERN.NORMALFLG")) ,
+            row => Json.obj("normalFlg" -> JsBoolean(row[Boolean]("DISPPATERN.NORMALFLG")) ,
                 "numberFlg" -> JsBoolean(row[Boolean]("DISPPATERN.NUMBERFLG")) ,
-                "colorFlg" -> JsBoolean(row[Boolean]("DISPPATERN.COLORFLG"))))).toList
+                "colorFlg" -> JsBoolean(row[Boolean]("DISPPATERN.COLORFLG")))).toList
         )
-    return Json.toJson(Map("normal" -> resultJsValueList(0),
+    return Json.obj("normal" -> resultJsValueList(0),
          "number" -> resultJsValueList(1),
-         "color" -> resultJsValueList(2)))
+         "color" -> resultJsValueList(2))
   }
 }
