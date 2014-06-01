@@ -12,9 +12,9 @@
 	</head>
 	<body>
 		<div ng-controller="fibCtrl">
-			<input type="radio" name ="flg" ng-click="getNormalFlg()" checked>normalList</input>
-			<input type="radio" name ="flg" ng-click="getNumberFlg()">numberList</input>
-			<input type="radio" name ="flg" ng-click="getColorFlg()">colorList</input>
+			<input type="radio" name ="flg" ng-click="getDispFlg('normal')" checked>normalList</input>
+			<input type="radio" name ="flg" ng-click="getDispFlg('number')">numberList</input>
+			<input type="radio" name ="flg" ng-click="getDispFlg('color')">colorList</input>
 			<br>
 			size : 
 			<input type="number" ng-model="fibSize" ng-change="size()" id="size" min="0" max="100"></input>

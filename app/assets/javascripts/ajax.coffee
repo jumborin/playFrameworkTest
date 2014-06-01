@@ -21,12 +21,7 @@ angular.module('myapp', [
     ).error (data, status, headers, config) ->
       $scope.fibs = ""
 
-  $scope.getNormalFlg = ->
-    $scope.dispFlg = dispFlg.normal
+  $scope.getDispFlg = (flg)->
+    $scope.dispFlg = dispFlg[flg]
 
-  $scope.getNumberFlg = ->
-    $scope.dispFlg = dispFlg.number
-
-  $scope.getColorFlg = ->
-    $scope.dispFlg = dispFlg.color
 ]
