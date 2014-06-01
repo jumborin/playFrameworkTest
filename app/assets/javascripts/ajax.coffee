@@ -3,10 +3,11 @@
 angular.module('myapp', [
   'ui.bootstrap'
 ]).controller 'fibCtrl', ['$scope','$http', ($scope, $http) ->
-  dispFlg = -> [this.normal,this.number,this.color]
-  dispFlg.normal = -> [this.normalFlg,this.numberFlg,this.colorFlg]
-  dispFlg.number = -> [this.normalFlg,this.numberFlg,this.colorFlg]
-  dispFlg.color = -> [this.normalFlg,this.numberFlg,this.colorFlg]
+  dispFlg = -> [
+    (this.normal　= -> [this.normalFlg,this.numberFlg,this.colorFlg]),
+    (this.number　= -> [this.normalFlg,this.numberFlg,this.colorFlg]),
+    (this.color　= -> [this.normalFlg,this.numberFlg,this.colorFlg])]
+  
   $scope.fibSize=0
 
   $http.get("/dispFlg/").success((data, status, headers, config) ->
@@ -15,8 +16,7 @@ angular.module('myapp', [
     )
 
   $scope.size = ->
-    url = "/fibSize/" + $scope.fibSize
-    $http.get(url).success((data, status, headers, config) ->
+    $http.get("/fibSize/" + $scope.fibSize).success((data, status, headers, config) ->
       $scope.fibs = data
     ).error (data, status, headers, config) ->
       $scope.fibs = ""
