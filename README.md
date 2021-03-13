@@ -2,10 +2,10 @@
 PlayFrameworkとScalaでWEb開発(Fizbiz)
 
 # アーキテクチャ(技術要素)
-AngularJS 1.2.9
-bootstrap 3.1.1
-PlayFramework 2.2.2
-DB H2Database
+- AngularJS 1.2.9
+- bootstrap 3.1.1
+- PlayFramework 2.2.2
+- DB H2Database
 
 # 変更箇所
 - playFrameworkTest/app/assets/javascripts/ajax.coffee
