@@ -15,4 +15,9 @@ PlayFrameworkとScalaでWEb開発(Fizbiz)
 - playFrameworkTest/conf/application.conf
 - playFrameworkTest/conf/routes
 
+# 環境構築
+- sbtインストール
+  - https://www.scala-sbt.org/download.html
+- Play
+  - https://www.playframework.com/getting-started
 以上
