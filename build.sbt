@@ -12,6 +12,6 @@ libraryDependencies ++= Seq(
 
 play.Project.playScalaSettings
 
-resolvers += "Typesafe Releases" at "https://repo.typesafe.com/typesafe/releases/"
+resolvers += "Maven Central" at "https://repo1.maven.org/maven2/"
 
-resolvers += "Typesafe Ivy Releases" at "https://repo.typesafe.com/typesafe/ivy-releases/"
+resolvers += "Lightbend Releases" at "https://repo.lightbend.com/lightbend/maven-releases/"
