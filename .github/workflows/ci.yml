@@ -38,9 +38,31 @@ jobs:
     - name: Start application
       run: |
         sbt "run 9000" &
-        sleep 30
+        echo "Waiting for application to start..."
+        for i in {1..60}; do
+          if curl -s http://localhost:9000/ > /dev/null 2>&1; then
+            echo "Application started successfully after $i seconds"
+            break
+          fi
+          echo "Attempt $i: Application not ready yet, waiting..."
+          sleep 5
+        done
     
     - name: Test application endpoint
       run: |
         curl -f http://localhost:9000/ || exit 1
         echo "Application is running successfully"
+    
+    - name: Setup Chrome
+      uses: browser-actions/setup-chrome@latest
+    
+    - name: Take screenshot
+      run: |
+        google-chrome --headless --disable-gpu --no-sandbox --screenshot=screenshot.png --window-size=1280,720 http://localhost:9000/
+        ls -la screenshot.png
+    
+    - name: Upload screenshot
+      uses: actions/upload-artifact@v3
+      with:
+        name: application-screenshot
+        path: screenshot.png
