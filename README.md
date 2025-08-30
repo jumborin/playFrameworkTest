@@ -1,3 +1,5 @@
+[![CI](https://github.com/jumborin/playframeworkTest/workflows/CI/badge.svg)](https://github.com/jumborin/playframeworkTest/actions)
+
 # 内容
 PlayFrameworkとScalaでWEb開発(Fizbiz)
 
