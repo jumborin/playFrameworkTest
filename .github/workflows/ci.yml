@@ -46,3 +46,25 @@ jobs:
         echo "Checking application files..."
         ls -la target/universal/stage/ || echo "Stage directory not found"
         echo "Build verification completed"
+    
+    - name: Start application
+      run: |
+        echo "Starting application..."
+        sbt "run 9000" &
+        sleep 60
+        echo "Application startup completed"
+    
+    - name: Setup Chrome
+      uses: browser-actions/setup-chrome@latest
+    
+    - name: Take screenshot
+      run: |
+        echo "Taking screenshot..."
+        google-chrome --headless --disable-gpu --no-sandbox --screenshot=screenshot.png --window-size=1280,720 http://localhost:9000/
+        ls -la screenshot.png
+    
+    - name: Upload screenshot
+      uses: actions/upload-artifact@v4
+      with:
+        name: application-screenshot
+        path: screenshot.png
