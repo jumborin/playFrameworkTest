@@ -90,6 +90,8 @@ jobs:
         cat > screenshot.js << 'EOF'
         const puppeteer = require('puppeteer');
         
+        const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+        
         (async () => {
           const browser = await puppeteer.launch({
             headless: true,
@@ -101,12 +103,12 @@ jobs:
           
           // Initial screenshot
           await page.goto('http://localhost:9000/');
-          await page.waitForTimeout(2000);
+          await sleep(2000);
           await page.screenshot({ path: 'screenshot-initial.png' });
           
           // Input size 10 and take screenshot
           await page.type('#size', '10');
-          await page.waitForTimeout(3000);
+          await sleep(3000);
           await page.screenshot({ path: 'screenshot-size10.png' });
           
           await browser.close();
