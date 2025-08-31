@@ -77,14 +77,47 @@ jobs:
     - name: Setup Chrome
       uses: browser-actions/setup-chrome@latest
     
-    - name: Take screenshot
-      run: |
-        echo "Taking screenshot..."
-        google-chrome --headless --disable-gpu --no-sandbox --screenshot=screenshot.png --window-size=1280,720 http://localhost:9000/
-        ls -la screenshot.png
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
     
-    - name: Upload screenshot
+    - name: Install Puppeteer
+      run: npm install puppeteer
+    
+    - name: Take screenshots
+      run: |
+        cat > screenshot.js << 'EOF'
+        const puppeteer = require('puppeteer');
+        
+        (async () => {
+          const browser = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+          });
+          
+          const page = await browser.newPage();
+          await page.setViewport({ width: 1280, height: 720 });
+          
+          // Initial screenshot
+          await page.goto('http://localhost:9000/');
+          await page.waitForTimeout(2000);
+          await page.screenshot({ path: 'screenshot-initial.png' });
+          
+          // Input size 10 and take screenshot
+          await page.type('#size', '10');
+          await page.waitForTimeout(3000);
+          await page.screenshot({ path: 'screenshot-size10.png' });
+          
+          await browser.close();
+        })();
+        EOF
+        
+        node screenshot.js
+        ls -la screenshot-*.png
+    
+    - name: Upload screenshots
       uses: actions/upload-artifact@v4
       with:
-        name: application-screenshot
-        path: screenshot.png
+        name: application-screenshots
+        path: screenshot-*.png
