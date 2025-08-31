@@ -51,8 +51,25 @@ jobs:
       run: |
         echo "Starting application..."
         sbt "run 9000" &
-        sleep 60
-        echo "Application startup completed"
+        
+        echo "Waiting for application to be ready..."
+        for i in {1..30}; do
+          if curl -s http://localhost:9000/ > /dev/null 2>&1; then
+            echo "Application is ready after $((i*10)) seconds"
+            break
+          fi
+          echo "Attempt $i: Waiting for application..."
+          sleep 10
+        done
+        
+        # Final check
+        if curl -s http://localhost:9000/ > /dev/null 2>&1; then
+          echo "Application startup completed successfully"
+        else
+          echo "Application failed to start"
+          ps aux | grep sbt
+          exit 1
+        fi
     
     - name: Setup Chrome
       uses: browser-actions/setup-chrome@latest
