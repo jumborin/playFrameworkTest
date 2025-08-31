@@ -51,7 +51,7 @@ jobs:
       run: |
         echo "Starting application using staged package..."
         cd target/universal/stage
-        ./bin/fib6 -Dhttp.port=9000 &
+        ./bin/fib6 -Dhttp.port=9000 -DapplyEvolutions.default=true &
         cd ../../..
         
         echo "Waiting for application to be ready..."
